@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>JavaScript Grammar</title>
+    <style>
+    * {
+        box-sizing: border-box;
+    }
+
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        font-family: Helvetica, Arial, sans-serif;
+    }
+
+    h3 {
+        font-size: 1.5em;
+    }
+
+    pre {
+        padding: 1em;
+        margin: .5em 0;
+        overflow: auto;
+        text-shadow: 0 1px white;
+        tab-size: 4;
+        line-height: 1.5em;
+        font-size: 14px;
+        background: #f5f2f0;
+        outline: 1px dotted #aaa;
+        margin-bottom: 30px;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    pre a,
+    pre span {
+        background: #ddf;
+        padding: 3px 2px 1px;
+        margin: 0 -2px;
+        text-shadow: none;
+    }
+
+    pre a:hover {
+        background: #66f;
+        color: white;
+    }
+
+    p {
+        margin: 8px 0;
+    }
+
+    p.spidermonkey,
+    p.difference {
+        padding: 10px;
+        font-style: italic;
+    }
+
+    .spidermonkey {
+        background: #ffe4e4;
+        text-shadow: none;
+    }
+
+    .difference {
+        background: #efe;
+    }
+
+    #sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 230px;
+        background: #f5f2f0;
+        border-right: 1px solid #ccc;
+        padding: 0 10px 20px;
+        overflow: scroll;
+    }
+
+    #main {
+        margin-left: 230px;
+        padding: 20px;
+    }
+
+    nav {
+        font-size: 14px;
+    }
+
+    pre,
+    code,
+    nav li a {
+        font-family: Consolas, Monaco, 'Andale Mono', monospace;
+    }
+
+    h4 {
+        margin: 10px 0 3px 0;
+    }
+
+    ul {
+        margin: 0 0 0 10px;
+        padding: 0;
+        list-style-type: none;
+    }
+
+    li {
+        padding: 0;
+    }
+    </style>
+</head>
+<body>
+
+<div id="sidebar">
+    <nav>
+        <section>
+            <h4>Node objects</h4>
+            <ul>
+                <li><a href="#Node">Node</a></li>
+                <li><a href="#Position">Position</a></li>
+                <li><a href="#SourceLocation">SourceLocation</a></li>
+            </ul>
+        </section>
+        <section>
+            <h4>Programs</h4>
+            <ul>
+                <li><a href="#Program">Program</a></li>
+            </ul>
+        </section>
+        <section>
+            <h4>Functions</h4>
+            <ul>
+                <li><a href="#Function">Function</a></li>
+            </ul>
+        </section>
+        <section>
+            <h4>Statements</h4>
+            <ul>
+                <li><a href="#Statement">Statement</a></li>
+                <li><a href="#BlockStatement">BlockStatement</a></li>
+                <li><a href="#BreakStatement">BreakStatement</a></li>
+                <li><a href="#ContinueStatement">ContinueStatement</a></li>
+                <li><a href="#DebuggerStatement">DebuggerStatement</a></li>
+                <li><a href="#DoWhileStatement">DoWhileStatement</a></li>
+                <li><a href="#EmptyStatement">EmptyStatement</a></li>
+                <li><a href="#ExpressionStatement">ExpressionStatement</a></li>
+                <li><a href="#ForStatement">ForStatement</a></li>
+                <li><a href="#ForInStatement">ForInStatement</a></li>
+                <li><a href="#ForOfStatement">ForOfStatement</a></li>
+                <li><a href="#IfStatement">IfStatement</a></li>
+                <li><a href="#LabeledStatement">LabeledStatement</a></li>
+                <li><a href="#LetStatement">LetStatement</a></li>
+                <li><a href="#ReturnStatement">ReturnStatement</a></li>
+                <li><a href="#SwitchStatement">SwitchStatement</a></li>
+                <li><a href="#ThrowStatement">ThrowStatement</a></li>
+                <li><a href="#TryStatement">TryStatement</a></li>
+                <li><a href="#WhileStatement">WhileStatement</a></li>
+                <li><a href="#WithStatement">WithStatement</a></li>
+            </ul>
+        </section>
+        <section>
+            <h4>Declarations</h4>
+            <ul>
+                <li><a href="#Declaration">Declaration</a></li>
+                <li><a href="#FunctionDeclaration">FunctionDeclaration</a></li>
+                <li><a href="#VariableDeclaration">VariableDeclaration</a></li>
+                <li><a href="#VariableDeclarator">VariableDeclarator</a></li>
+            </ul>
+        </section>
+        <section>
+            <h4>Expressions</h4>
+            <ul>
+                <li><a href="#Expression">Expression</a></li>
+                <li><a href="#ArrayExpression">ArrayExpression</a></li>
+                <li><a href="#ArrowExpression">ArrowExpression</a></li>
+                <li><a href="#AssignmentExpression">AssignmentExpression</a></li>
+                <li><a href="#BinaryExpression">BinaryExpression</a></li>
+                <li><a href="#CallExpression">CallExpression</a></li>
+                <li><a href="#ComprehensionExpression">ComprehensionExpression</a></li>
+                <li><a href="#ConditionalExpression">ConditionalExpression</a></li>
+                <li><a href="#FunctionExpression">FunctionExpression</a></li>
+                <li><a href="#GeneratorExpression">GeneratorExpression</a></li>
+                <li><a href="#LetExpression">LetExpression</a></li>
+                <li><a href="#LogicalExpression">LogicalExpression</a></li>
+                <li><a href="#MemberExpression">MemberExpression</a></li>
+                <li><a href="#NewExpression">NewExpression</a></li>
+                <li><a href="#ObjectExpression">ObjectExpression</a></li>
+                <li><a href="#SequenceExpression">SequenceExpression</a></li>
+                <li><a href="#ThisExpression">ThisExpression</a></li>
+                <li><a href="#UnaryExpression">UnaryExpression</a></li>
+                <li><a href="#UpdateExpression">UpdateExpression</a></li>
+                <li><a href="#YieldExpression">YieldExpression</a></li>
+            </ul>
+        </section>
+        <section>
+            <h4>Patterns</h4>
+            <ul>
+                <li><a href="#Pattern">Pattern</a></li>
+                <li><a href="#ArrayPattern">ArrayPattern</a></li>
+                <li><a href="#ObjectPattern">ObjectPattern</a></li>
+                <li><a href="#PropertyPattern">PropertyPattern</a></li>
+            </ul>
+        </section>
+        <section>
+            <h4>Clauses</h4>
+            <ul>
+                <li><a href="#CatchClause">CatchClause</a></li>
+                <li><a href="#ComprehensionBlock">ComprehensionBlock</a></li>
+                <li><a href="#SwitchCase">SwitchCase</a></li>
+            </ul>
+        </section>
+        <section>
+            <h4>Miscellaneous</h4>
+            <ul>
+                <li><a href="#AssignmentOperator">AssignmentOperator</a></li>
+                <li><a href="#BinaryOperator">BinaryOperator</a></li>
+                <li><a href="#Identifier">Identifier</a></li>
+                <li><a href="#Literal">Literal</a></li>
+                <li><a href="#LogicalOperator">LogicalOperator</a></li>
+                <li><a href="#Property">Property</a></li>
+                <li><a href="#UnaryOperator">UnaryOperator</a></li>
+                <li><a href="#UpdateOperator">UpdateOperator</a></li>
+            </ul>
+        </section>
+    </nav>
+</div>
+
+<div id="main">
+
+<h3>Node objects</h3>
+
+<pre>
+interface <a href="#Node" id="Node">Node</a> {
+    type: string;
+    loc: <a href="#SourceLocation">SourceLocation</a> | null;
+}
+</pre>
+
+<pre>
+interface <a href="#SourceLocation" id="SourceLocation">SourceLocation</a> {
+    source: string | null;
+    start: <a href="#Position">Position</a>;
+    end: <a href="#Position">Position</a>;
+}
+</pre>
+
+<pre>
+interface <a href="#Position" id="Position">Position</a> {
+    line: uint32 &gt;= 1;
+    column: uint32 &gt;= 0;
+}
+</pre>
+
+<h3>Programs</h3>
+
+<p>A complete program source tree.</p>
+
+<pre>
+interface <a href="#Program" id="Program">Program</a> &lt;: <a href="#Node">Node</a> {
+    type: "<a href="#Program">Program</a>";
+    body: [ <a href="#Statement">Statement</a> ];
+}
+
+<a href="#Program">program</a>(body[, loc])
+body: [ <a href="#Statement">Statement</a> ]
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<h3>Functions</h3>
+
+<p>A function declaration or expression.</p>
+
+<pre>
+interface <a href="#Function" id="Function">Function</a> &lt;: <a href="#Node">Node</a> {
+    id: <a href="#Identifier">Identifier</a> | null;
+    params: [ <a href="#Pattern">Pattern</a> ];
+    defaults: [ <a href="#Expression">Expression</a> ];
+    rest: <a href="#Identifier">Identifier</a> | null;
+    body: <a href="#BlockStatement">BlockStatement</a> | <a href="#Expression" class="spidermonkey">Expression</a>;
+    <span class="spidermonkey">generator: boolean;</span>
+    <span class="spidermonkey">expression: boolean;</span>
+}
+</pre>
+
+<h3>Statements</h3>
+
+<p>Any statement.</p>
+
+<pre>
+interface <a href="#Statement" id="Statement">Statement</a> &lt;: <a href="#Node">Node</a> { }
+</pre>
+
+<p>An empty statement, i.e., a solitary semicolon.</p>
+
+<pre>
+interface <a href="#EmptyStatement" id="EmptyStatement">EmptyStatement</a> &lt;: <a href="#Statement">Statement</a> {
+    type: "<a href="#EmptyStatement">EmptyStatement</a>";
+}
+
+<a href="#EmptyStatement">emptyStatement</a>([loc])
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A block statement, i.e., a sequence of statements surrounded by braces.</p>
+<p class="difference">The builder differs from that specified in the Mozilla Parser API: body is an Array of Statements instead of a single Statement.</p>
+
+<pre>
+interface <a href="#BlockStatement" id="BlockStatement">BlockStatement</a> &lt;: <a href="#Statement">Statement</a> {
+    type: "<a href="#BlockStatement">BlockStatement</a>";
+    body: [ <a href="#Statement">Statement</a> ];
+}
+
+<a href="#BlockStatement">blockStatement</a>(body[, loc])
+body: [ <a href="#Statement">Statement</a> ]
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>An expression statement, i.e., a statement consisting of a single expression.</p>
+
+<pre>
+interface <a href="#ExpressionStatement" id="ExpressionStatement">ExpressionStatement</a> &lt;: <a href="#Statement">Statement</a> {
+    type: "<a href="#ExpressionStatement">ExpressionStatement</a>";
+    expression: <a href="#Expression">Expression</a>;
+}
+
+<a href="#ExpressionStatement">expressionStatement</a>(expr[, loc])
+expr: <a href="#Expression">Expression</a>
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>An <code>if</code> statement.</p>
+
+<pre>
+interface <a href="#IfStatement" id="IfStatement">IfStatement</a> &lt;: <a href="#Statement">Statement</a> {
+    type: "<a href="#IfStatement">IfStatement</a>";
+    test: <a href="#Expression">Expression</a>;
+    consequent: <a href="#Statement">Statement</a>;
+    alternate: <a href="#Statement">Statement</a> | null;
+}
+
+<a href="#IfStatement">ifStatement</a>(test, cons, alt[, loc])
+test: <a href="#Expression">Expression</a>
+cons: <a href="#Statement">Statement</a>
+alt: <a href="#Statement">Statement</a> | null
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A labeled statement, i.e., a statement prefixed by a <code>break</code>/<code>continue</code> label.</p>
+
+<pre>
+interface <a href="#LabeledStatement" id="LabeledStatement">LabeledStatement</a> &lt;: <a href="#Statement">Statement</a> {
+    type: "<a href="#LabeledStatement">LabeledStatement</a>";
+    label: <a href="#Identifier">Identifier</a>;
+    body: <a href="#Statement">Statement</a>;
+}
+
+<a href="#LabeledStatement">labeledStatement</a>(label, body[, loc])
+label: <a href="#Identifier">Identifier</a>
+body: <a href="#Statement">Statement</a>
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A <code>break</code> statement.</p>
+
+<pre>
+interface <a href="#BreakStatement" id="BreakStatement">BreakStatement</a> &lt;: <a href="#Statement">Statement</a> {
+    type: "<a href="#BreakStatement">BreakStatement</a>";
+    label: <a href="#Identifier">Identifier</a> | null;
+}
+
+<a href="#BreakStatement">breakStatement</a>(label[, loc])
+label: <a href="#Identifier">Identifier</a> | null
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A <code>continue</code> statement.</p>
+
+<pre>
+interface <a href="#ContinueStatement" id="ContinueStatement">ContinueStatement</a> &lt;: <a href="#Statement">Statement</a> {
+    type: "<a href="#ContinueStatement">ContinueStatement</a>";
+    label: <a href="#Identifier">Identifier</a> | null;
+}
+
+<a href="#ContinueStatement">continueStatement</a>(label[, loc])
+label: <a href="#Identifier">Identifier</a> | null
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A <code>with</code> statement.</p>
+
+<pre>
+interface <a href="#WithStatement" id="WithStatement">WithStatement</a> &lt;: <a href="#Statement">Statement</a> {
+    type: "<a href="#WithStatement">WithStatement</a>";
+    object: <a href="#Expression">Expression</a>;
+    body: <a href="#Statement">Statement</a>;
+}
+
+<a href="#WithStatement">withStatement</a>(obj, body[, loc])
+obj: <a href="#Expression">Expression</a>
+body: <a href="#Statement">Statement</a>
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A <code>switch</code> statement.</p>
+<p>The lexical flag is metadata indicating whether the switch statement contains any unnested <code>let</code> declarations (and therefore introduces a new lexical scope).</p>
+
+<pre>
+interface <a href="#SwitchStatement" id="SwitchStatement">SwitchStatement</a> &lt;: <a href="#Statement">Statement</a> {
+    type: "<a href="#SwitchStatement">SwitchStatement</a>";
+    discriminant: <a href="#Expression">Expression</a>;
+    cases: [ <a href="#SwitchCase">SwitchCase</a> ];
+    lexical: boolean;
+}
+
+<a href="#SwitchStatement">switchStatement</a>(disc, cases, isLexical[, loc])
+disc: <a href="#Expression">Expression</a>
+cases: [ <a href="#SwitchCase">SwitchCase</a> ]
+isLexical: boolean
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A <code>return</code> statement.</p>
+
+<pre>
+interface <a href="#ReturnStatement" id="ReturnStatement">ReturnStatement</a> &lt;: <a href="#Statement">Statement</a> {
+    type: "<a href="#ReturnStatement">ReturnStatement</a>";
+    argument: <a href="Expression">Expression</a> | null;
+}
+
+<a href="#ReturnStatement">returnStatement</a>(arg[, loc])
+arg: <a href="#Expression">Expression</a> | null
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A <code>throw</code> statement.</p>
+
+<pre>
+interface <a href="#ThrowStatement" id="ThrowStatement">ThrowStatement</a> &lt;: <a href="#Statement">Statement</a> {
+    type: "<a href="#ThrowStatement">ThrowStatement</a>";
+    argument: <a href="#Expression">Expression</a>;
+}
+
+<a href="#ThrowStatement">throwStatement</a>(arg[, loc])
+arg: <a href="#Expression">Expression</a>
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A <code>try</code> statement.</p>
+<p class="difference">The builder in the Mozilla Parser API accepts multiple handlers. This only accepts a single handler.</p>
+
+<pre>
+interface <a href="#TryStatement" id="TryStatement">TryStatement</a> &lt;: <a href="#Statement">Statement</a> {
+    type: "<a href="#TryStatement">TryStatement</a>";
+    block: <a href="#BlockStatement">BlockStatement</a>;
+    handler: <a href="#CatchClause">CatchClause</a> | null;
+    <span class="spidermonkey">guardedHandlers: [ <a href="#CatchClause">CatchClause</a> ];</span>
+    finalizer: <a href="#BlockStatement">BlockStatement</a> | null;
+}
+
+<a href="#TryStatement">tryStatement</a>(body, handler, fin[, loc])
+body: <a href="#Statement">Statement</a>
+handler: <a href="#CatchClause">CatchClause</a>
+fin: <a href="#Statement">Statement</a> | null
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A <code>while</code> statement.</p>
+
+<pre>
+interface <a href="#WhileStatement" id="WhileStatement">WhileStatement</a> &lt;: <a href="#Statement">Statement</a> {
+    type: "<a href="#WhileStatement">WhileStatement</a>";
+    test: <a href="#Expression">Expression</a>;
+    body: <a href="#Statement">Statement</a>;
+}
+
+<a href="#WhileStatement">whileStatement</a>(test, body[, loc])
+test: <a href="#Expression">Expression</a>
+body: <a href="#Statement">Statement</a>
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A <code>do/while</code> statement.</p>
+
+<pre>
+interface <a href="#DoWhileStatement" id="DoWhileStatement">DoWhileStatement</a> &lt;: <a href="#Statement">Statement</a> {
+    type: "<a href="#DoWhileStatement">DoWhileStatement</a>";
+    body: <a href="#Statement">Statement</a>;
+    test: <a href="#Expression">Expression</a>;
+}
+
+<a href="#DoWhileStatement">doWhileStatement</a>(body, test[, loc])
+body: <a href="#Statement">Statement</a>
+test: <a href="#Expression">Expression</a>
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A <code>for</code> statement.</p>
+
+<pre>
+interface <a href="#ForStatement" id="ForStatement">ForStatement</a> &lt;: <a href="#Statement">Statement</a> {
+    type: "<a href="#ForStatement">ForStatement</a>";
+    init: <a href="#VariableDeclaration">VariableDeclaration</a> | <a href="#Expression">Expression</a> | null;
+    test: <a href="#Expression">Expression</a> | null;
+    update: <a href="#Expression">Expression</a> | null;
+    body: <a href="#Statement">Statement</a>;
+}
+
+<a href="#ForStatement">forStatement</a>(init, test, update, body[, loc])
+init: <a href="#VariableDeclaration">VariableDeclaration</a> | <a href="#Expression">Expression</a> | null
+test: <a href="#Expression">Expression</a> | null
+update: <a href="#Expression">Expression</a> | null
+body: <a href="#Statement">Statement</a>
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A <code>for/in</code> statement, or, if each is true, a <code>for each/in</code> statement.</p>
+
+<pre>
+interface <a href="#ForInStatement" id="ForInStatement">ForInStatement</a> &lt;: <a href="#Statement">Statement</a> {
+    type: "<a href="#ForInStatement">ForInStatement</a>";
+    left: <a href="#VariableDeclaration">VariableDeclaration</a> | <a href="#Expression">Expression</a>;
+    right: <a href="#Expression">Expression</a>;
+    body: <a href="#Statement">Statement</a>;
+    <span class="spidermonkey">each: boolean;</span>
+}
+
+<a href="#ForInStatement">forInStatement</a>(left, right, body, <span class="spidermonkey">isForEach</span>[, loc])
+left: <a href="#VariableDeclaration">VariableDeclaration</a> | <a href="#Expression">Expression</a>
+right: <a href="#Expression">Expression</a>
+body: <a href="#Statement">Statement</a>
+<span class="spidermonkey">isForEach: boolean</span>
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A <code>for/of</code> statement.</p>
+<p class="difference">The Mozilla Parser API does not define a builder, so one has been defined here.</p>
+
+<pre>
+interface <a href="#ForOfStatement" id="ForOfStatement">ForOfStatement</a> &lt;: <a href="#Statement">Statement</a> {
+    type: "<a href="#ForOfStatement">ForOfStatement</a>";
+    left: <a href="#VariableDeclaration">VariableDeclaration</a> | <a href="#Expression">Expression</a>;
+    right: <a href="#Expression">Expression</a>;
+    body: <a href="#Statement">Statement</a>;
+}
+
+<a href="#ForOfStatement">forOfStatement</a>(left, right, body[, loc])
+left: <a href="#VariableDeclaration">VariableDeclaration</a> | <a href="#Expression">Expression</a>
+right: <a href="#Expression">Expression</a>
+body: <a href="#Statement">Statement</a>
+</pre>
+
+<p>A <code>let</code> statement.</p>
+
+<pre class="spidermonkey">
+interface <a href="#LetStatement" id="LetStatement">LetStatement</a> &lt;: <a href="#Statement">Statement</a> {
+    type: "<a href="#LetStatement">LetStatement</a>";
+    head: [ { id: <a href="#Pattern">Pattern</a>, init: <a href="#Expression">Expression</a> | null } ];
+    body: <a href="#Statement">Statement</a>;
+}
+
+<a href="#LetStatement">letStatement</a>(head, body[, loc])
+head: [ <a href="#Declarator">Declarator</a> ]
+body: <a href="#Statement">Statement</a>
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A <code>debugger</code> statement.</p>
+
+<pre>
+interface <a href="#DebuggerStatement" id="DebuggerStatement">DebuggerStatement</a> &lt;: <a href="#Statement">Statement</a> {
+    type: "<a href="#DebuggerStatement">DebuggerStatement</a>";
+}
+
+<a href="#DebuggerStatement">debuggerStatement</a>([loc])
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<h3>Declarations</h3>
+
+<p>Any declaration node.</p>
+
+<pre>
+interface <a href="#Declaration" id="Declaration">Declaration</a> &lt;: <a href="#Statement">Statement</a> { }
+</pre>
+
+<p>A function declaration.</p>
+<p class="difference">The builder intentionally differs from the Mozilla Parser API in its arguments instead of (name, args, body, isGenerator, isExpression[, loc]).</p>
+
+<pre>
+interface <a href="#FunctionDeclaration" id="FunctionDeclaration">FunctionDeclaration</a> &lt;: <a href="#Function">Function</a>, <a href="#Declaration">Declaration</a> {
+    type: "<a href="#FunctionDeclaration">FunctionDeclaration</a>";
+    id: <a href="#Identifier">Identifier</a>;
+    params: [ <a href="#Pattern">Pattern</a> ];
+    defaults: [ <a href="#Expression">Expression</a> ];
+    rest: <a href="#Identifier">Identifier</a> | null;
+    body: <a href="#BlockStatement">BlockStatement</a> | <a href="#Expression"><span class="spidermonkey">Expression</span></a>;
+    <span class="spidermonkey">generator: boolean;</span>
+    <span class="spidermonkey">expression: boolean;</span>
+}
+
+<a href="#FunctionDeclaration">functionDeclaration</a>(id, params, defaults, rest, body, <span class="spidermonkey">isGenerator</span>, <span class="spidermonkey">isExpression</span>[, loc])
+id: <a href="#Identifier">Identifier</a>
+params: [ <a href="#Pattern">Pattern</a> ]
+defaults: [ <a href="#Expression">Expression</a> ]
+rest: <a href="#Identifier">Identifier</a> | null
+body: <a href="#BlockStatement">BlockStatement</a> | <a href="#Expression"><span class="spidermonkey">Expression</span></a>
+<span class="spidermonkey">isGenerator: boolean</span>
+<span class="spidermonkey">isExpression: boolean</span>
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A variable declaration, via one of var, let, or const.</p>
+
+<pre>
+interface <a href="#VariableDeclaration" id="VariableDeclaration">VariableDeclaration</a> &lt;: <a href="#Declaration">Declaration</a> {
+    type: "<a href="#VariableDeclaration">VariableDeclaration</a>";
+    declarations: [ <a href="#VariableDeclarator">VariableDeclarator</a> ];
+    kind: "var" | <span class="spidermonkey">"let"</span> | <span class="spidermonkey">"const"</span>;
+}
+
+<a href="#VariableDeclaration">variableDeclaration</a>(kind, dtors[, loc])
+kind: "var" | <span class="spidermonkey">"let"</span> | <span class="spidermonkey">"const"</span>
+dtors: [ <a href="#Declarator">Declarator</a> ]
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A variable declarator.</p>
+
+<pre>
+interface <a href="#VariableDeclarator" id="VariableDeclarator">VariableDeclarator</a> &lt;: <a href="#Node">Node</a> {
+    type: "<a href="#VariableDeclarator">VariableDeclarator</a>";
+    id: <a href="#Pattern">Pattern</a>;
+    init: <a href="#Expression">Expression</a> | null;
+}
+
+<a href="#VariableDeclarator">variableDeclarator</a>(patt, init[, loc])
+patt: <a href="#Pattern">Pattern</a>
+init: <a href="#Expression">Expression</a> | null
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<h3>Expressions</h3>
+
+<p>Any expression node.</p>
+
+<pre>
+interface <a href="#Expression" id="Expression">Expression</a> &lt;: <a href="#Node">Node</a>, <a href="#Pattern">Pattern</a> { }
+</pre>
+
+<p>A this expression.</p>
+
+<pre>
+interface <a href="#ThisExpression" id="ThisExpression">ThisExpression</a> &lt;: <a href="#Expression">Expression</a> {
+    type: "<a href="#ThisExpression">ThisExpression</a>";
+}
+
+<a href="#ThisExpression">thisExpression</a>([loc])
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>An array expression.</p>
+
+<pre>
+interface <a href="#ArrayExpression" id="ArrayExpression">ArrayExpression</a> &lt;: <a href="#Expression">Expression</a> {
+    type: "<a href="#ArrayExpression">ArrayExpression</a>";
+    elements: [ <a href="#Expression">Expression</a> | null ];
+}
+
+<a href="#ArrayExpression">arrayExpression</a>(elts[, loc])
+elts: [ <a href="#Expression">Expression</a> | null ]
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>An object expression.</p>
+<p>A literal property in an object expression can have either a string or number as its value.</p>
+<p>Ordinary property initializers have a kind value "init"; getters and setters
+have the kind values "get" and "set", respectively.</p>
+
+<pre>
+interface <a href="#ObjectExpression" id="ObjectExpression">ObjectExpression</a> &lt;: <a href="#Expression">Expression</a> {
+    type: "<a href="#ObjectExpression">ObjectExpression</a>";
+    properties: [ <a href="#Property">Property</a> ];
+}
+
+<a href="#ObjectExpression">objectExpression</a>(props[, loc])
+props: [ <a href="#Property">Property</a> ]
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A function expression.</p>
+<p class="difference">The builder intentionally differs from the Mozilla Parser API in its arguments instead of (name, args, body, isGenerator, isExpression[, loc]).</p>
+
+<pre>
+interface <a href="#FunctionExpression" id="FunctionExpression">FunctionExpression</a> &lt;: <a href="#Function">Function</a>, <a href="#Expression">Expression</a> {
+    type: "<a href="#FunctionExpression">FunctionExpression</a>";
+    id: <a href="#Identifier">Identifier</a> | null;
+    params: [ <a href="#Pattern">Pattern</a> ];
+    defaults: [ <a href="#Expression">Expression</a> ];
+    rest: <a href="#Identifier">Identifier</a> | null;
+    body: <a href="#BlockStatement">BlockStatement</a> | <a href="#Expression"><span class="spidermonkey">Expression</span></a>;
+    <span class="spidermonkey">generator: boolean;</span>
+    <span class="spidermonkey">expression: boolean;</span>
+}
+
+<a href="#FunctionExpression">functionExpression</a>(id, params, defaults, rest, body, <span class="spidermonkey">isGenerator</span>, <span class="spidermonkey">isExpression</span>[, loc])
+id: <a href="#Identifier">Identifier</a> | null
+params: [ <a href="#Pattern">Pattern</a> ]
+defaults: [ <a href="#Expression">Expression</a> ]
+rest: <a href="#Identifier">Identifier</a> | null
+body: <a href="#BlockStatement">BlockStatement</a> | <a href="#Expression"><span class="spidermonkey">Expression</span></a>
+<span class="spidermonkey">isGenerator: boolean</span>
+<span class="spidermonkey">isExpression: boolean</span>
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A fat arrow function expression, i.e., `let foo = (bar) =&gt; { /* body */ }`.</p>
+<p class="difference">The Mozilla Parser API does not specify a builder for the ArrowFunction node, so one has been created here.</p>
+
+<pre>
+interface <a href="#ArrowExpression" id="ArrowExpression">ArrowExpression</a> &lt;: <a href="#Function">Function</a>, <a href="#Expression">Expression</a> {
+    type: "<a href="#ArrowExpression">ArrowExpression</a>";
+    params: [ <a href="#Pattern">Pattern</a> ];
+    defaults: [ <a href="#Expression">Expression</a> ];
+    rest: <a href="#Identifier">Identifier</a> | null;
+    body: <a href="#BlockStatement">BlockStatement</a> | <a href="#Expression">Expression</a>;
+    generator: boolean;
+    expression: boolean;
+}
+
+<a href="#ArrowExpression">arrowExpression</a>(params, defaults, rest, body, <span class="spidermonkey">isGenerator</span>, <span class="spidermonkey">isExpression</span>[, loc])
+params: [ <a href="#Pattern">Pattern</a> ]
+defaults: [ <a href="#Expression">Expression</a> ]
+rest: <a href="#Identifier">Identifier</a> | null
+body: <a href="#BlockStatement">BlockStatement</a> | <a href="#Expression"><span class="spidermonkey">Expression</span></a>
+<span class="spidermonkey">isGenerator: boolean</span>
+<span class="spidermonkey">isExpression: boolean</span>
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A sequence expression, i.e., a comma-separated sequence of expressions.</p>
+
+<pre>
+interface <a href="#SequenceExpression" id="SequenceExpression">SequenceExpression</a> &lt;: <a href="#Expression">Expression</a> {
+    type: "<a href="#SequenceExpression">SequenceExpression</a>";
+    expressions: [ <a href="#Expression">Expression</a> ];
+}
+
+<a href="#SequenceExpression">sequenceExpression</a>(exprs[, loc])
+exprs: [ <a href="#Expression">Expression</a> ]
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A unary operator expression.</p>
+
+<pre>
+interface <a href="#UnaryExpression" id="UnaryExpression">UnaryExpression</a> &lt;: <a href="#Expression">Expression</a> {
+    type: "<a href="#UnaryExpression">UnaryExpression</a>";
+    operator: <a href="#UnaryOperator">UnaryOperator</a>;
+    prefix: boolean;
+    argument: <a href="#Expression">Expression</a>;
+}
+
+<a href="#UnaryExpression">unaryExpression</a>(op, arg, isPrefix[, loc])
+op: <a href="#UnaryOperator">UnaryOperator</a>
+arg: <a href="#Expression">Expression</a>
+isPrefix: boolean
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A binary operator expression.</p>
+
+<pre>
+interface <a href="#BinaryExpression" id="BinaryExpression">BinaryExpression</a> &lt;: <a href="#Expression">Expression</a> {
+    type: "<a href="#BinaryExpression">BinaryExpression</a>";
+    operator: <a href="#BinaryOperator">BinaryOperator</a>;
+    left: <a href="#Expression">Expression</a>;
+    right: <a href="#Expression">Expression</a>;
+}
+
+<a href="#BinaryExpression">binaryExpression</a>(op, left, right[, loc])
+op: <a href="#BinaryOperator">BinaryOperator</a>
+left: <a href="#Expression">Expression</a>
+right: <a href="#Expression">Expression</a>
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>An assignment operator expression.</p>
+
+<pre>
+interface <a href="#AssignmentExpression" id="AssignmentExpression">AssignmentExpression</a> &lt;: <a href="#Expression">Expression</a> {
+    type: "<a href="#AssignmentExpression">AssignmentExpression</a>";
+    operator: <a href="#AssignmentOperator">AssignmentOperator</a>;
+    left: <a href="#Expression">Expression</a>;
+    right: <a href="#Expression">Expression</a>;
+}
+
+<a href="#AssignmentExpression">assignmentExpression</a>(op, left, right[, loc])
+op: <a href="#AssignmentOperator">AssignmentOperator</a>
+left: <a href="#Expression">Expression</a>
+right: <a href="#Expression">Expression</a>
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>An update (increment or decrement) operator expression.</p>
+
+<pre>
+interface <a href="#UpdateExpression" id="UpdateExpression">UpdateExpression</a> &lt;: <a href="#Expression">Expression</a> {
+    type: "<a href="#UpdateExpression">UpdateExpression</a>";
+    operator: <a href="#UpdateOperator">UpdateOperator</a>;
+    argument: <a href="#Expression">Expression</a>;
+    prefix: boolean;
+}
+
+<a href="#UpdateExpression">updateExpression</a>(op, arg, isPrefix[, loc])
+op: <a href="#UpdateOperator">UpdateOperator</a>
+arg: <a href="#Expression">Expression</a>
+isPrefix: boolean
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A logical operator expression.</p>
+
+<pre>
+interface <a href="#LogicalExpression" id="LogicalExpression">LogicalExpression</a> &lt;: <a href="#Expression">Expression</a> {
+    type: "<a href="#LogicalExpression">LogicalExpression</a>";
+    operator: <a href="#LogicalOperator">LogicalOperator</a>;
+    left: <a href="#Expression">Expression</a>;
+    right: <a href="#Expression">Expression</a>;
+}
+
+<a href="#LogicalExpression">logicalExpression</a>(op, left, right[, loc])
+op: <a href="#LogicalOperator">LogicalOperator</a>
+left: <a href="#Expression">Expression</a>
+right: <a href="#Expression">Expression</a>
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A conditional expression, i.e., a ternary ?/: expression.</p>
+
+<pre>
+interface <a href="#ConditionalExpression" id="ConditionalExpression">ConditionalExpression</a> &lt;: <a href="#Expression">Expression</a> {
+    type: "<a href="#ConditionalExpression">ConditionalExpression</a>";
+    test: <a href="#Expression">Expression</a>;
+    alternate: <a href="#Expression">Expression</a>;
+    consequent: <a href="#Expression">Expression</a>;
+}
+
+<a href="#ConditionalExpression">conditionalExpression</a>(test, cons, alt[, loc])
+test: <a href="#Expression">Expression</a>
+cons: <a href="#Expression">Expression</a>
+alt: <a href="#Expression">Expression</a>
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A new expression.</p>
+
+<pre>
+interface <a href="#NewExpression" id="NewExpression">NewExpression</a> &lt;: <a href="#Expression">Expression</a> {
+    type: "<a href="#NewExpression">NewExpression</a>";
+    callee: <a href="#Expression">Expression</a>;
+    arguments: [ <a href="#Expression">Expression</a> | null ];
+}
+
+<a href="#NewExpression">newExpression</a>(callee, args[, loc])
+callee: <a href="#Expression">Expression</a>
+args: [ <a href="#Expression">Expression</a> ]
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A function or method call expression.</p>
+
+<pre>
+interface <a href="#CallExpression" id="CallExpression">CallExpression</a> &lt;: <a href="#Expression">Expression</a> {
+    type: "<a href="#CallExpression">CallExpression</a>";
+    callee: <a href="#Expression">Expression</a>;
+    arguments: [ <a href="#Expression">Expression</a> | null ];
+}
+
+<a href="#CallExpression">callExpression</a>(callee, args[, loc])
+callee: <a href="#Expression">Expression</a>
+args: [ <a href="#Expression">Expression</a> ]
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A member expression.</p>
+<p>If computed === true, the node corresponds to a computed e1[e2] expression and property is an <a href="#Expression">Expression</a>. If computed === false, the node corresponds to a static e1.x expression and property is an <a href="#Identifier">Identifier</a>.</p>
+
+<pre>
+interface <a href="#MemberExpression" id="MemberExpression">MemberExpression</a> &lt;: <a href="#Expression">Expression</a> {
+    type: "<a href="#MemberExpression">MemberExpression</a>";
+    object: <a href="#Expression">Expression</a>;
+    property: <a href="#Identifier">Identifier</a> | <a href="#Expression">Expression</a>;
+    computed: boolean;
+}
+
+<a href="#MemberExpression">memberExpression</a>(obj, prop, isComputed[, loc])
+obj: <a href="#Expression">Expression</a>
+prop: <a href="#Identifier">Identifier</a> | <a href="#Expression">Expression</a>
+isComputed: boolean
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A yield expression.</p>
+<p class="difference">The Mozilla Parser API does not specify a <code>type</code> property for YieldExpression, so one has been added here.</p>
+
+<pre class="spidermonkey">
+interface <a href="#YieldExpression" id="YieldExpression">YieldExpression</a> &lt;: <a href="#Expression">Expression</a> {
+    <span class="difference">type: "<a href="#YieldExpression">YieldExpression</a>";</span>
+    argument: <a href="#Expression">Expression</a> | null;
+}
+
+<a href="#YieldExpression">yieldExpression</a>(arg[, loc])
+arg: <a href="#Expression">Expression</a>
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>An array comprehension.</p>
+<p>The blocks array corresponds to the sequence of for and for each blocks.</p>
+<p>The optional filter expression corresponds to the final if clause, if present.</p>
+<p class="difference">The Mozilla Parser API does not specify a <code>type</code> property for ComprehensionExpression, so one has been added here.</p>
+
+<pre class="spidermonkey">
+interface <a href="#ComprehensionExpression" id="ComprehensionExpression">ComprehensionExpression</a> &lt;: <a href="#Expression">Expression</a> {
+    <span class="difference">type: "<a href="#ComprehensionExpression">ComprehensionExpression</a>";</span>
+    body: <a href="#Expression">Expression</a>;
+    blocks: [ <a href="#ComprehensionBlock">ComprehensionBlock</a> ];
+    filter: <a href="#Expression">Expression</a> | null;
+}
+
+<a href="#ComprehensionExpression">comprehensionExpression</a>(body, blocks, filter[, loc])
+body: <a href="#Expression">Expression</a>
+blocks: [ <a href="#ComprehensionBlock">ComprehensionBlock</a> ]
+filter: <a href="#Expression">Expression</a> | null
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A generator expression.</p>
+<p>As with array comprehensions, the blocks array corresponds to the sequence of for and for each blocks, and the optional filter expression corresponds to the final if clause, if present.</p>
+<p class="difference">The Mozilla Parser API does not specify a <code>type</code> property for GeneratorExpression, so one has been added here.</p>
+
+<pre class="spidermonkey">
+interface <a href="#GeneratorExpression" id="GeneratorExpression">GeneratorExpression</a> &lt;: <a href="#Expression">Expression</a> {
+    <span class="difference">type: "<a href="#GeneratorExpression">GeneratorExpression</a>";</span>
+    body: <a href="#Expression">Expression</a>;
+    blocks: [ <a href="#ComprehensionBlock">ComprehensionBlock</a> ];
+    filter: <a href="#Expression">Expression</a> | null;
+}
+
+<a href="#GeneratorExpression">generatorExpression</a>(body, blocks, filter[, loc])
+body: <a href="#Expression">Expression</a>
+blocks: [ <a href="#ComprehensionBlock">ComprehensionBlock</a> ]
+filter: <a href="#Expression">Expression</a> | null
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A let expression.</p>
+
+<pre class="spidermonkey">
+interface <a href="#LetExpression" id="LetExpression">LetExpression</a> &lt;: <a href="#Expression">Expression</a> {
+    type: "<a href="#LetExpression">LetExpression</a>";
+    head: [ { id: <a href="#Pattern">Pattern</a>, init: <a href="#Expression">Expression</a> | null } ];
+    body: <a href="#Expression">Expression</a>;
+}
+
+<a href="#LetExpression">letExpression</a>(head, body[, loc])
+head: [ <a href="#Declarator">Declarator</a> ]
+body: <a href="#Expression">Expression</a>
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<h3>Patterns</h3>
+
+<pre>
+interface <a href="#Pattern" id="Pattern">Pattern</a> &lt;: <a href="#Node">Node</a> { }
+</pre>
+
+<p>An object-destructuring pattern.</p>
+<p>A literal property in an object pattern can have either a string or number as its value.</p>
+
+<pre>
+interface <a href="#ObjectPattern" id="ObjectPattern">ObjectPattern</a> &lt;: <a href="#Pattern">Pattern</a> {
+    type: "<a href="#ObjectPattern">ObjectPattern</a>";
+    properties: [ <a href="#PropertyPattern">PropertyPattern</a> ];
+}
+
+<a href="#ObjectPattern">objectPattern</a>(props[, loc])
+props: [ <a href="#PropertyPattern">PropertyPattern</a> ]
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>An object property pattern.</p>
+<p class="difference">The Mozilla Parser API does not specify a <code>type</code> property for PropertyPattern, so one has been added here.</p>
+
+<pre>
+interface <a href="#PropertyPattern" id="PropertyPattern">PropertyPattern &lt;: <a href="#Node">Node</a> {
+    <span class="difference">type: "<a href="PropertyPattern">PropertyPattern</a>";</span>
+    key: <a href="#Literal">Literal</a> | <a href="#Identifier">Identifier</a>;
+    value: <a href="#Pattern">Pattern</a>;
+}
+
+<a href="#PropertyPattern">propertyPattern</a>(key, patt[, loc])
+key: <a href="#Literal">Literal</a> | <a href="#Identifier">Identifier</a>
+patt: <a href="#Pattern">Pattern</a>
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>An array-destructuring pattern.</p>
+
+<pre>
+interface <a href="#ArrayPattern" id="ArrayPattern">ArrayPattern</a> &lt;: <a href="#Pattern">Pattern</a> {
+    type: "<a href="#ArrayPattern">ArrayPattern</a>";
+    elements: [ <a href="#Pattern">Pattern</a> | null ];
+}
+
+<a href="#ArrayPattern">arrayPattern</a>(elts[, loc])
+elts: [ <a href="#Pattern">Pattern</a> | null ]
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<h3>Clauses</h3>
+
+<p>A case (if test is an <a href="#Expression">Expression</a>) or default (if test === null) clause in the body of a switch statement.</p>
+
+<pre>
+interface <a href="#SwitchCase" id="SwitchCase">SwitchCase</a> &lt;: <a href="#Node">Node</a> {
+    type: "<a href="#SwitchCase">SwitchCase</a>";
+    test: <a href="#Expression">Expression</a> | null;
+    consequent: [ <a href="#Statement">Statement</a> ];
+}
+
+<a href="#SwitchCase">switchCase</a>(test, cons[, loc])
+test: <a href="#Expression">Expression</a> | null
+cons: [ <a href="#Statement">Statement</a> ]
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A catch clause following a try block.</p>
+<p>The optional guard property corresponds to the optional expression guard on the bound variable.</p>
+
+<pre>
+interface <a href="#CatchClause" id="CatchClause">CatchClause</a> &lt;: <a href="#Node">Node</a> {
+    type: "<a href="#CatchClause">CatchClause</a>";
+    param: <a href="#Pattern">Pattern</a>;
+    <span class="spidermonkey">guard: <a href="#Expression">Expression</a> | null;</span>
+    body: <a href="#BlockStatement">BlockStatement</a>;
+}
+
+<a href="#CatchClause">catchClause</a>(arg, <span class="spidermonkey">guard</span>, body[, loc])
+arg: <a href="#Pattern">Pattern</a>
+<span class="spidermonkey">guard: <a href="#Expression">Expression</a></span>
+body: <a href="#Statement">Statement</a>
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A for or for each block in an array comprehension or generator expression.</p>
+<p class="difference">The Mozilla Parser API does not specify a <code>type</code> property for ComprehensionBlock, so one has been added here.</p>
+
+<pre class="spidermonkey">
+interface <a href="#ComprehensionBlock" id="ComprehensionBlock">ComprehensionBlock</a> &lt;: <a href="#Node">Node</a> {
+    <span class="difference">type: "<a href="#ComprehensionBlock">ComprehensionBlock</a>";</span>
+    left: <a href="#Pattern">Pattern</a>;
+    right: <a href="#Expression">Expression</a>;
+    each: boolean;
+}
+
+<a href="#ComprehensionBlock">comprehensionBlock</a>(left, right, isForEach[, loc])
+left: <a href="#Pattern">Pattern</a>
+right: <a href="#Expression">Expression</a>
+isForEach: boolean
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<h3>Miscellaneous</h3>
+
+<p>An identifier.</p>
+<p>Note that an identifier may be an expression or a destructuring pattern.</p>
+
+<pre>
+interface <a href="#Identifier" id="Identifier">Identifier</a> &lt;: <a href="#Node">Node</a>, <a href="#Expression">Expression</a>, <a href="#Pattern">Pattern</a> {
+    type: "<a href="#Identifier">Identifier</a>";
+    name: string;
+}
+
+<a href="#Identifier">identifier</a>(name[, loc])
+name: string
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A literal token.</p>
+<p>Note that a literal can be an expression.</p>
+
+<pre>
+interface <a href="#Literal" id="Literal">Literal</a> &lt;: <a href="#Node">Node</a>, <a href="#Expression">Expression</a> {
+    type: "<a href="#Literal">Literal</a>";
+    value: string | boolean | null | number | RegExp;
+}
+
+<a href="#Literal">literal</a>(val[, loc])
+val: string | boolean | null | number | RegExp
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>An object property initializer.</p>
+<p class="difference">The order of the arguments in the builder intentionally differs from that specified by the Mozilla Parser API: the kind argument comes third, rather than first.</p>
+
+<pre>
+interface <a href="#Property" id="Property">Property</a> &lt; <a href="#Node">Node</a> {
+    type: "<a href="#Property">Property</a>";
+    key: <a href="#Literal">Literal</a> | <a href="#Identifier">Identifier</a>;
+    value: <a href="#Expression">Expression</a>;
+    kind: "init" | "get" | "set";
+}
+
+<a href="#Property">property</a>(key, val, kind[, loc])
+key: <a href="#Literal">Literal</a> | <a href="#Identifier">Identifier</a>
+val: <a href="#Expression">Expression</a>
+kind: "init" | "get" | "set"
+loc: <a href="#SourceLocation">SourceLocation</a>
+</pre>
+
+<p>A unary operator token.</p>
+
+<pre>
+enum <a href="#UnaryOperator" id="UnaryOperator">UnaryOperator</a> {
+    "-" | "+" | "!" | "~" | "typeof" | "void" | "delete"
+}
+</pre>
+
+<p>A binary operator token.</p>
+
+<pre>
+enum <a href="#BinaryOperator" id="BinaryOperator">BinaryOperator</a> {
+    "==" | "!=" | "===" | "!=="
+         | "&lt;" | "&lt;=" | "&gt;" | "&gt;="
+         | "&lt;&lt;" | "&gt;&gt;" | "&gt;&gt;&gt;"
+         | "+" | "-" | "*" | "/" | "%"
+         | "|" | "^" | "in"
+         | "instanceof" | <span class="spidermonkey">".."</span>
+}
+</pre>
+
+<p>A logical operator token.</p>
+
+<pre>
+enum <a href="#LogicalOperator" id="LogicalOperator">LogicalOperator</a> {
+    "||" | "&amp;&amp;"
+}
+</pre>
+
+<p>An assignment operator token.</p>
+
+<pre>
+enum <a href="#AssignmentOperator" id="AssignmentOperator">AssignmentOperator</a> {
+    "=" | "+=" | "-=" | "*=" | "/=" | "%="
+        | "&lt;&lt;=" | "&gt;&gt;=" | "&gt;&gt;&gt;="
+        | "|=" | "^=" | "&amp;="
+}
+</pre>
+
+<p>An update (increment or decrement) operator token.</p>
+
+<pre>
+enum <a href="#UpdateOperator" id="UpdateOperator">UpdateOperator</a> {
+    "++" | "--"
+}
+</pre>
+</div>
+</body>
+</html>
