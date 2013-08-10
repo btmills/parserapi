@@ -437,7 +437,7 @@ loc: <a href="#SourceLocation">SourceLocation</a>
 <pre>
 interface <a href="#ReturnStatement" id="ReturnStatement">ReturnStatement</a> &lt;: <a href="#Statement">Statement</a> {
     type: "<a href="#ReturnStatement">ReturnStatement</a>";
-    argument: <a href="Expression">Expression</a> | null;
+    argument: <a href="#Expression">Expression</a> | null;
 }
 
 <a href="#ReturnStatement">returnStatement</a>(arg[, loc])
@@ -1006,7 +1006,7 @@ loc: <a href="#SourceLocation">SourceLocation</a>
 
 <pre>
 interface <a href="#PropertyPattern" id="PropertyPattern">PropertyPattern &lt;: <a href="#Node">Node</a> {
-    <span class="difference">type: "<a href="PropertyPattern">PropertyPattern</a>";</span>
+    <span class="difference">type: "<a href="#PropertyPattern">PropertyPattern</a>";</span>
     key: <a href="#Literal">Literal</a> | <a href="#Identifier">Identifier</a>;
     value: <a href="#Pattern">Pattern</a>;
 }
